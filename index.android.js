@@ -11,12 +11,18 @@ import React, {
   View,
   TextInput
 } from 'react-native';
+import Forecast from './components/forecast';
 
 class WeatherProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      zip: ''
+      zip: '',
+      forecast: {
+        main: 'Clouds',
+        description: 'few clouds',
+        temp: 45.7
+      }
     };
   }
 
@@ -36,13 +42,9 @@ class WeatherProject extends Component {
         <TextInput
           style={ styles.input }
           returnKeyType='go'
-          onSubmitEditing={ this._handleTextChange } />
-        <Text style={ styles.instructions }>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={ styles.instructions }>
-          Shake or press menu button for dev menu
-        </Text>
+          onSubmitEditing={ this._handleTextChange.bind(this) } />
+        <Forecast
+          forecast={ this.state.forecast } />
       </View>
     );
   }

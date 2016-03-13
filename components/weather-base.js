@@ -18,13 +18,18 @@ import { APPID } from '../env_var';
 export default class WeatherBase extends Component {
   constructor(props) {
     super(props);
+    this.image1 = require('image!cold_cloud');
+    this.image2 = require('image!cloud');
     this.state = {
-      zip: '',
+      zip: '15767',
       forecast: {
         main: 'It\'s going to be grey.',
         description: 'the rest of your life.',
         temp: 45.7
-      }
+      },
+      flavor1: 'It\'s going to be cold for zip code: ',
+      flavor2: 'And it will last you',
+      image: this.image1
     };
   }
 
@@ -33,7 +38,7 @@ export default class WeatherBase extends Component {
     this.setState({
       zip: zip
     });
-    console.log("//// appid ////", APPID);
+
     fetch('http://api.openweathermap.org/data/2.5/weather?q=' + zip +
       '&units=imperial&APPID=' + APPID)
       .then((response) => response.json())
@@ -44,7 +49,10 @@ export default class WeatherBase extends Component {
             main: responseJSON.weather[0].main,
             description: responseJSON.weather[0].description,
             temp: responseJSON.main.temp
-          }
+          },
+          flavor1: 'Get weather for zip code: ',
+          flavor2: 'Current weather for ' + responseJSON.name,
+          image: this.image2
         });
       })
       .catch((error) => {
@@ -53,26 +61,27 @@ export default class WeatherBase extends Component {
   }
 
   render() {
-    console.log(require('image!snowy_mtns'));
     return (
       <View style={ styles.container } >
-        <Image source={ require('image!snowy_mtns') }
-          resizeMode='cover'
+        <Image source={ this.state.image }
+          resizeMode='contain'
           style={ styles.backdrop } >
           <View style={ styles.overlay }>
             <View style={ styles.row }>
               <Text style={ styles.mainText }>
-                It's going to be cold for { this.state.zip }
+                { this.state.flavor1 }
               </Text>
               <View style={ styles.zipContainer }>
                 <TextInput
                   style={ [styles.zipCode, styles.mainText] }
                   returnKeyType='go'
+                  defaultValue={ this.state.zip }
                   onSubmitEditing={ this._handleTextChange.bind(this) } />
               </View>
             </View>
             <Forecast
               mainText={ styles.mainText }
+              flavor2={ this.state.flavor2 }
               forecast={ this.state.forecast } />
           </View>
         </Image>

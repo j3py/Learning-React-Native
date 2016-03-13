@@ -18,7 +18,7 @@ export default class Forecast extends Component {
           { this.props.forecast.main }
         </Text>
         <Text style={ this.props.mainText }>
-          And it will last you: { this.props.forecast.description }
+          { this.props.flavor2 }: { this.props.forecast.description }
         </Text>
         <Text style={ styles.bigText }>
           { this.props.forecast.temp }°F

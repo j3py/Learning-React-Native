@@ -6,7 +6,7 @@ import React, {
   View,
 } from 'react-native';
 
-export default class Forecast extends Component {
+export default class Details extends Component {
   constructor(props) {
     super(props);
   }
@@ -15,14 +15,19 @@ export default class Forecast extends Component {
     return (
       <View style={ styles.forecastContainer }>
         <Text style={ styles.bigText }>
-          { this.props.forecast.main }
+          { JSON.stringify(this.props.forecast) }
+          { JSON.stringify(this.props.stations) }
         </Text>
-        <Text style={ this.props.mainText }>
-          { this.props.flavor2 }: { this.props.forecast.description }
-        </Text>
-        <Text style={ styles.bigText }>
-          { this.props.forecast.temp }°F
-        </Text>
+        <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
+          <Text style={ this.props.button }>
+            Details
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
+          <Text style={ this.props.button }>
+            Details
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   }

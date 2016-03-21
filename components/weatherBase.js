@@ -14,7 +14,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 import CurrentWeather from './currentWeather';
-import Detail from './details/details';
+import Detail from './details/detail';
 import { APPID } from '../env_var';
 
 export default class WeatherBase extends Component {
@@ -22,6 +22,7 @@ export default class WeatherBase extends Component {
     super(props);
     this.image1 = require('image!cold_cloud');
     this.image2 = require('image!cloud');
+    this.details = null;
     this.state = {
       zip: '15767',
       enterZip: false,
@@ -31,7 +32,9 @@ export default class WeatherBase extends Component {
         temp: 'Groundhog Day',
         loc: {
           latitude: null,
-          longitude: null
+          longitude: null,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1
         }
       },
       forecast: null,
@@ -84,7 +87,9 @@ export default class WeatherBase extends Component {
           temp: responseJSON.main.temp,
           loc: {
             latitude: responseJSON.coord.lat,
-            longitude: responseJSON.coord.lon
+            longitude: responseJSON.coord.lon,
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1
           }
         },
         flavor1: 'Get weather for: ',
@@ -96,7 +101,7 @@ export default class WeatherBase extends Component {
     this._genericRequest(url, setStateFunc);
   }
 
-  _handleForecastClick(event) {
+  _handleForecastPress(event) {
     // The response to this request duplicates some data
     // and should be refactored as our main request
     var urlStns = 'http://api.openweathermap.org/data/2.5/station/find?lat=' +
@@ -106,6 +111,12 @@ export default class WeatherBase extends Component {
       this.setState({
         stations: responseJSON
       });
+      this.details =
+          <Detail
+            button={ styles.button }
+            loc={ this.state.current.loc }
+            forecast={ this.state.forecast }
+            stations={ this.state.stations } />;
     };
 
     var urlForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.zip +
@@ -122,18 +133,6 @@ export default class WeatherBase extends Component {
   }
 
   render() {
-    var details;
-    if(this.state.forecast) {
-      details =
-        <Detail
-          button={ styles.button }
-          loc={ this.state.current.loc }
-          forecast={ this.state.forecast }
-          stations={ this.state.stations } />;
-    } else {
-      details = null;
-    }
-
     return (
       <View style={ styles.container } >
         <Image source={ this.state.image }
@@ -157,13 +156,13 @@ export default class WeatherBase extends Component {
               flavor2={ this.state.flavor2 }
               current={ this.state.current } />
 
-            { this.state.enterZip ? <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
+            { this.state.enterZip ? <TouchableHighlight onPress={ this._handleForecastPress.bind(this) }>
               <Text style={ styles.button }>
                 Details
               </Text>
             </TouchableHighlight> : null }
 
-            { details }
+            { this.details }
           </View>
         </Image>
       </View>

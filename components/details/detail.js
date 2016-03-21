@@ -9,38 +9,39 @@ import React, {
 import Forecast from './forecast/forecast';
 import Map from './map/map';
 
-export default class Details extends Component {
+export default class Detail extends Component {
   constructor(props) {
     super(props);
-    this.forecast = null;
-    this.map = null;
+    this.state = {
+      forecastState: null,
+      mapState: null
+    }
+
   }
 
   _handleForecastPress() {
-    this.map ?
-    this.map =
-      <Map
-        loc={ this.props.loc }
-        stations={ this.props.stations } /> :
-    null;
+    this.setState({
+      forecastState:
+        <Forecast
+          button={ styles.button }
+          forecast={ this.props.forecast } />
+    });
   }
 
   _handleMapPress() {
-    this.forecast ?
-    this.forecast =
-      <Forecast
-        button={ styles.button }
-        forecast={ this.props.forecast } /> :
-    null;
+    console.log('/// map press ////');
+    this.setState({
+      mapState:
+        <Map
+          loc={ this.props.loc }
+          stations={ this.props.stations } />
+    });
   }
 
   render() {
+    console.log('/// stations props', this.props.stations);
     return (
       <View style={ styles.forecastContainer }>
-        <Text style={ styles.bigText }>
-          { JSON.stringify(this.props.forecast) }
-          { JSON.stringify(this.props.stations) }
-        </Text>
         <TouchableHighlight onPress={ this._handleForecastPress.bind(this) } >
           <Text style={ this.props.button }>
             5-day forecast
@@ -51,8 +52,8 @@ export default class Details extends Component {
             Station map
           </Text>
         </TouchableHighlight>
-        { this.forecast }
-        { this.map }
+        { this.state.forecastState }
+        { this.state.mapState }
       </View>
     );
   }

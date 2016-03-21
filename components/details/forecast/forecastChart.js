@@ -3,7 +3,7 @@ import React, {
   Component,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 
 export default class Details extends Component {
@@ -18,16 +18,6 @@ export default class Details extends Component {
           { JSON.stringify(this.props.forecast) }
           { JSON.stringify(this.props.stations) }
         </Text>
-        <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
-          <Text style={ this.props.button }>
-            Details
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
-          <Text style={ this.props.button }>
-            Details
-          </Text>
-        </TouchableHighlight>
       </View>
     );
   }

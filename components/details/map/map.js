@@ -13,10 +13,23 @@ export default class Map extends Component {
   }
 
   render() {
+    console.log('//// map component loc', this.props.loc);
+    var markers = [
+      {
+        latitude: this.props.stations[0].station.coord.lat,
+        longitude: this.props.stations[0].station.coord.lon,
+        title: this.props.stations[0].station.name,
+        subtitle: "Distance: " + this.props.stations[0].distance
+      }
+    ];
+
     return (
       <MapView
         style={styles.map}
-        region={ this.props.loc } />
+        region={ this.props.loc }
+        mapType={ 'standard' }
+        annotations={ markers }
+        overlays={ [{ coordinates: [this.props.loc] }] } />
     );
   }
 }

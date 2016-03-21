@@ -4,6 +4,7 @@ import React, {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight
 } from 'react-native';
 
 export default class Forecast extends Component {
@@ -16,16 +17,15 @@ export default class Forecast extends Component {
       <View style={ styles.forecastContainer }>
         <Text style={ styles.bigText }>
           { JSON.stringify(this.props.forecast) }
-          { JSON.stringify(this.props.stations) }
         </Text>
-        <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
+        <TouchableHighlight onPress={ this._handleForecastChartPress.bind(this) }>
           <Text style={ this.props.button }>
-            Details
+            Chart view
           </Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={ this._handleForecastClick.bind(this) }>
+        <TouchableHighlight onPress={ this._handleForecastListPress.bind(this) }>
           <Text style={ this.props.button }>
-            Details
+            List view
           </Text>
         </TouchableHighlight>
       </View>

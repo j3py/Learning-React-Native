@@ -4,8 +4,8 @@ import React, {
   StyleSheet,
   Text,
   View,
-  MapView
 } from 'react-native';
+import MapView from 'react-native-maps';
 
 export default class Map extends Component {
   constructor(props) {
@@ -13,23 +13,18 @@ export default class Map extends Component {
   }
 
   render() {
-    console.log('//// map component loc', this.props.loc);
-    var markers = [
-      {
-        latitude: this.props.stations[0].station.coord.lat,
-        longitude: this.props.stations[0].station.coord.lon,
-        title: this.props.stations[0].station.name,
-        subtitle: "Distance: " + this.props.stations[0].distance
-      }
-    ];
-
     return (
       <MapView
-        style={styles.map}
-        region={ this.props.loc }
-        mapType={ 'standard' }
-        annotations={ markers }
-        overlays={ [{ coordinates: [this.props.loc] }] } />
+        style={styles.map }
+        region={ this.props.loc }>
+        { this.props.stations.map((marker, index) => (
+          <MapView.Marker
+            key={ index }
+            coordinate={ { latitude: marker.station.coord.lat, longitude: marker.station.coord.lon } }
+            title={ marker.station.name }
+            description={ 'Distance: ' + marker.distance } />
+        ))}
+      </MapView>
     );
   }
 }
@@ -37,9 +32,12 @@ export default class Map extends Component {
 const baseFontSize = 16;
 const styles = StyleSheet.create({
   map: {
-    height: 150,
-    margin: 10,
-    borderWidth: 1,
-    borderColor: '#000000',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 250,
+    width: 250
   },
 });

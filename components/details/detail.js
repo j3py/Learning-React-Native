@@ -16,20 +16,18 @@ export default class Detail extends Component {
       forecastState: null,
       mapState: null
     }
-
   }
 
   _handleForecastPress() {
     this.setState({
       forecastState:
         <Forecast
-          button={ styles.button }
+          button={ this.props.button }
           forecast={ this.props.forecast } />
     });
   }
 
   _handleMapPress() {
-    console.log('/// map press ////');
     this.setState({
       mapState:
         <Map
@@ -39,7 +37,6 @@ export default class Detail extends Component {
   }
 
   render() {
-    console.log('/// stations props', this.props.stations);
     return (
       <View style={ styles.forecastContainer }>
         <TouchableHighlight onPress={ this._handleForecastPress.bind(this) } >

@@ -6,18 +6,37 @@ import React, {
   View,
   TouchableHighlight
 } from 'react-native';
+import ForecastChart from './forecastChart';
+import ForecastList from './forecastList';
 
 export default class Forecast extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      forecastChartState: null,
+      forecastListState: null
+    }
+  }
+
+  _handleForecastChartPress() {
+    this.setState({
+      forecastChartState:
+        <ForecastChart
+          forecast={ this.props.forecast } />
+    });
+  }
+
+  _handleForecastListPress() {
+    this.setState({
+      forecastListState:
+        <ForecastList
+          forecast={ this.props.forecast } />
+    });
   }
 
   render() {
     return (
       <View style={ styles.forecastContainer }>
-        <Text style={ styles.bigText }>
-          { JSON.stringify(this.props.forecast) }
-        </Text>
         <TouchableHighlight onPress={ this._handleForecastChartPress.bind(this) }>
           <Text style={ this.props.button }>
             Chart view
@@ -28,6 +47,8 @@ export default class Forecast extends Component {
             List view
           </Text>
         </TouchableHighlight>
+        { this.state.forecastChartState }
+        { this.state.forecastListState }
       </View>
     );
   }

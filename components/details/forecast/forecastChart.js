@@ -6,17 +6,17 @@ import React, {
   View
 } from 'react-native';
 
-export default class Details extends Component {
+export default class ForecastChart extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
+    console.log('//// chart props', JSON.stringify(this.props.forecast));
     return (
       <View style={ styles.forecastContainer }>
         <Text style={ styles.bigText }>
           { JSON.stringify(this.props.forecast) }
-          { JSON.stringify(this.props.stations) }
         </Text>
       </View>
     );

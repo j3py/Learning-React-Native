@@ -17,7 +17,6 @@ export default class ForecastList extends Component {
   }
 
   render() {
-    console.log('//// data source', this.props.forecast);
     return (
       <View style={ styles.forecastContainer }>
         <ListView

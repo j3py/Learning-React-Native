@@ -26,6 +26,10 @@ export default class WeatherBase extends Component {
     this.state = {
       zip: '15767',
       enterZip: false,
+      flavor1: 'It\'s going to be cold for zip code: ',
+      flavor2: 'And it will last you',
+      city: '',
+      image: this.image2,
       current: {
         main: 'It\'s going to be grey.',
         description: 'the rest of your life.',
@@ -37,12 +41,9 @@ export default class WeatherBase extends Component {
           longitudeDelta: 0.1
         }
       },
+      details: null,
       forecast: null,
       stations: null,
-      flavor1: 'It\'s going to be cold for zip code: ',
-      flavor2: 'And it will last you',
-      city: '',
-      image: this.image2
     };
   }
 
@@ -70,7 +71,7 @@ export default class WeatherBase extends Component {
       );
   }
 
-  _handleTextChange(event) {
+  _handleZipSubmit(event) {
     var zip = event.nativeEvent.text;
     this.setState({
       zip: zip,
@@ -109,14 +110,14 @@ export default class WeatherBase extends Component {
       '&APPID=' + APPID;
     var setStateStns = (responseJSON) => {
       this.setState({
-        stations: responseJSON
+        stations: responseJSON,
+        details:
+            <Detail
+              button={ styles.button }
+              loc={ this.state.current.loc }
+              forecast={ this.state.forecast }
+              stations={ this.state.stations } />
       });
-      this.details =
-          <Detail
-            button={ styles.button }
-            loc={ this.state.current.loc }
-            forecast={ this.state.forecast }
-            stations={ this.state.stations } />;
     };
 
     var urlForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.zip +
@@ -147,8 +148,9 @@ export default class WeatherBase extends Component {
                 <TextInput
                   style={ [styles.zipCode, styles.mainText] }
                   returnKeyType='go'
-                  defaultValue={ this.state.zip }
-                  onSubmitEditing={ this._handleTextChange.bind(this) } />
+                  placeholder={ this.state.zip }
+                  clearTextOnFocus={ true }
+                  onSubmitEditing={ this._handleZipSubmit.bind(this) } />
               </View>
             </View>
             <CurrentWeather
@@ -162,7 +164,7 @@ export default class WeatherBase extends Component {
               </Text>
             </TouchableHighlight> : null }
 
-            { this.details }
+            { this.state.details }
           </View>
         </Image>
       </View>
@@ -198,14 +200,12 @@ const styles = StyleSheet.create({
   },
   zipContainer: {
     flex: 1,
-    borderBottomColor: '#DDDDDD',
-    borderBottomWidth: 1,
-    marginLeft: 5,
-    marginTop: 3
+    marginTop: 10
   },
   zipCode: {
-    width: 80,
-    height: baseFontSize,
+    marginTop: 10,
+    width: 50,
+    height: 24
   },
   mainText: {
     flex: 1,

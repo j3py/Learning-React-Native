@@ -30,7 +30,7 @@ export default class ForecastChart extends Component {
   render() {
     this._handleAnimation();
     return (
-      <View style={styles.container}>
+      <View style={ this.props.flipper }>
         <ListView
           dataSource={ this.state.dataSource }
           renderRow={ (data) =>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   label: {
-    color: '#CBCBCB',
+    color: '#FFFFFF',
     flex: 1,
     fontSize: 12,
     position: 'relative',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   dataNumber: {
-    color: '#CBCBCB',
+    color: '#FFFFFF',
     fontSize: 11
   },
   // Bar
@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   points: {
-    backgroundColor: '#F55443'
+    backgroundColor: 'purple'
   }
 });

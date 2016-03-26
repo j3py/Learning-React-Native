@@ -11,7 +11,8 @@ import React, {
   View,
   TextInput,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Animated
 } from 'react-native';
 import CurrentWeather from './currentWeather';
 import Detail from './details/detail';
@@ -30,6 +31,9 @@ export default class WeatherBase extends Component {
       flavor2: 'And it will last you',
       city: '',
       image: this.image2,
+      overlayTop: false,
+      openDetail: new Animated.Value(0),
+      closeDetail: new Animated.Value(150),
       current: {
         main: 'It\'s going to be grey.',
         description: 'the rest of your life.',
@@ -102,35 +106,36 @@ export default class WeatherBase extends Component {
     this._genericRequest(url, setStateFunc);
   }
 
-  _handleForecastPress(event) {
-    // The response to this request duplicates some data
-    // and should be refactored as our main request
-    var urlStns = 'http://api.openweathermap.org/data/2.5/station/find?lat=' +
-      this.state.current.loc.latitude + '&lon=' + this.state.current.loc.longitude +
-      '&APPID=' + APPID;
-    var setStateStns = (responseJSON) => {
+  _handleDetailPress(event) {
+    if(this.state.overlayTop) {
+      Animated.timing(this.state.openDetail, { toValue: 150 },).start();
       this.setState({
-        stations: responseJSON,
-        details:
-            <Detail
-              button={ styles.button }
-              loc={ this.state.current.loc }
-              forecast={ this.state.forecast }
-              stations={ this.state.stations } />
+        overlayTop: false
       });
-    };
+    } else {
+      var urlStns = 'http://api.openweathermap.org/data/2.5/station/find?lat=' +
+        this.state.current.loc.latitude + '&lon=' + this.state.current.loc.longitude +
+        '&APPID=' + APPID;
+      var setStateStns = (responseJSON) => {
+        Animated.timing(this.state.closeDetail, { toValue: 0 },).start();
+        this.setState({
+          stations: responseJSON,
+          overlayTop: true
+        });
+      };
 
-    var urlForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.zip +
-      '&units=imperial&APPID=' + APPID;
-    var setStateFore = (responseJSON) => {
-      this.setState({
-        forecast: responseJSON
-      });
-      // nested fetch
-      this._genericRequest(urlStns, setStateStns);
-    };
+      var urlForecast = 'http://api.openweathermap.org/data/2.5/forecast?q=' + this.state.zip +
+        '&units=imperial&APPID=' + APPID;
+      var setStateFore = (responseJSON) => {
+        this.setState({
+          forecast: responseJSON
+        });
+        // nested fetch
+        this._genericRequest(urlStns, setStateStns);
+      };
 
-    this._genericRequest(urlForecast, setStateFore);
+      this._genericRequest(urlForecast, setStateFore);
+    }
   }
 
   render() {
@@ -139,33 +144,36 @@ export default class WeatherBase extends Component {
         <Image source={ this.state.image }
           resizeMode='contain'
           style={ styles.backdrop } >
-          <View style={ styles.overlay }>
+          <Animated.View style={ [styles.overlay, { marginTop: this.state.overlayTop?this.state.openDetail:this.state.closeDetail }] }>
             <View style={ styles.row }>
-              <Text style={ styles.mainText }>
-                { this.state.flavor1 }
-              </Text>
-              <View style={ styles.zipContainer }>
+                <Text style={ styles.mainText }>
+                  { this.state.flavor1 }
+                </Text>
                 <TextInput
                   style={ [styles.zipCode, styles.mainText] }
                   returnKeyType='go'
                   placeholder={ this.state.zip }
+                  placeholderTextColor='gray'
                   clearTextOnFocus={ true }
                   onSubmitEditing={ this._handleZipSubmit.bind(this) } />
-              </View>
             </View>
             <CurrentWeather
               mainText={ styles.mainText }
               flavor2={ this.state.flavor2 }
               current={ this.state.current } />
 
-            { this.state.enterZip ? <TouchableHighlight onPress={ this._handleForecastPress.bind(this) }>
+            { this.state.enterZip ? <TouchableHighlight onPress={ this._handleDetailPress.bind(this) }>
               <Text style={ styles.button }>
                 Details
               </Text>
             </TouchableHighlight> : null }
 
-            { this.state.details }
-          </View>
+            { this.state.stations ? <Detail
+              loc={ this.state.current.loc }
+              forecast={ this.state.forecast }
+              stations={ this.state.stations } /> : null }
+
+          </Animated.View>
         </Image>
       </View>
     );
@@ -184,28 +192,27 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   overlay: {
-    marginTop: 200,
     paddingTop: 5,
-    backgroundColor: '#000000',
-    opacity: 0.5,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    // opacity: 0.5,
+    borderRadius: 5,
     flexDirection: 'column',
     alignItems: 'center'
   },
   row: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    alignItems: 'flex-start',
+    flexDirection: 'column',
+    //flexWrap: 'nowrap',
+    alignItems: 'center',
+    opacity: 1.0,
     padding: 30
   },
-  zipContainer: {
-    flex: 1,
-    marginTop: 10
-  },
+
   zipCode: {
-    marginTop: 10,
-    width: 50,
-    height: 24
+    flex: 1,
+    //marginTop: 10,
+    width: 60,
+    height: 44
   },
   mainText: {
     flex: 1,

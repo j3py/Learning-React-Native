@@ -13,9 +13,10 @@ export default class Map extends Component {
   }
 
   render() {
+    console.log('//// stations prop in Map', this.props.stations);
     return (
       <MapView
-        style={styles.map }
+        style={ this.props.flipper }
         region={ this.props.loc }>
         { this.props.stations.map((marker, index) => (
           <MapView.Marker
@@ -27,17 +28,22 @@ export default class Map extends Component {
       </MapView>
     );
   }
-}
+};
 
-const baseFontSize = 16;
-const styles = StyleSheet.create({
-  map: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 250,
-    width: 250
-  },
-});
+// const baseFontSize = 16;
+// const styles = StyleSheet.create({
+//   maps: {
+//     position: 'absolute',
+//     top: 50,
+//     left: -90,
+//     right: 0,
+//     bottom: 0,
+//     height: 300,
+//     width: 300,
+//     borderRadius: 10,
+//     shadowColor: '#000000',
+//     shadowOpacity: 1.0,
+//     shadowRadius: 2,
+//     shadowOffset: { height: 10, width: 5 }
+//   },
+// });

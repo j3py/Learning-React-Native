@@ -18,13 +18,17 @@ export default class ForecastList extends Component {
 
   render() {
     return (
-      <View style={ styles.forecastContainer }>
+      <View style={ [styles.forecastContainer, this.props.flipper] }>
         <ListView
           dataSource={ this.state.dataSource }
           renderRow={ (data) =>
-            <Text style={ styles.bigText }>
-              { JSON.stringify(data) }
-            </Text>
+            <View style={ styles.border }>
+              <Text style={ styles.bigText }>{ data.dt_txt }</Text>
+              <Text style={ styles.bigText }>{ data.weather[0].description }</Text>
+              <Text style={ styles.smallText }>
+                Temp: {data.main.temp} Hum: {data.main.humidity} Press: {data.main.pressure}
+              </Text>
+            </View>
           } />
       </View>
     );
@@ -39,8 +43,19 @@ const styles = StyleSheet.create({
   bigText: {
     flex: 2,
     fontSize: baseFontSize + 4,
-    textAlign: 'center',
+    textAlign: 'left',
     margin: 10,
     color: '#FFFFFF'
+  },
+  smallText: {
+    flex: 2,
+    fontSize: baseFontSize - 4,
+    textAlign: 'center',
+    margin: 10,
+    color: '#ffffff'
+  },
+  border: {
+    borderBottomColor: 'white',
+    borderBottomWidth: 3
   }
 });

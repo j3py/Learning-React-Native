@@ -168,7 +168,7 @@ export default class WeatherBase extends Component {
               </Text>
             </TouchableHighlight> : null }
 
-            { this.state.stations ? <Detail
+            { this.state.overlayTop ? <Detail
               loc={ this.state.current.loc }
               forecast={ this.state.forecast }
               stations={ this.state.stations } /> : null }

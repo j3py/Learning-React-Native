@@ -15,7 +15,8 @@ export default class Detail extends Component {
     super(props);
     this.state = {
       strings: ['5-day list', '5-day chart', 'Station map'],
-      booleans: [true, false, false]
+      booleans: [true, false, false],
+      options: false
     }
   }
 
@@ -23,37 +24,29 @@ export default class Detail extends Component {
     let array = [false, false, false];
     array[index] = true;
     this.setState({
-      booleans: array
+      booleans: array,
+      options: false
+    });
+  }
+
+  _handleOptionsPress() {
+    this.setState({
+      options: true
     });
   }
 
   render() {
-    let btns = [styles.leftBtn, styles.rightBtn];
-    let transforms = [styles.transformLeft, styles.transformRight];
+    let btns = [styles.leftBtn, styles.rightBtn, styles.centerBtn];
     let current = this.state.booleans.indexOf(true);
-    btns.splice(current, 0, false);
-    transforms.splice(current, 0, false);
 
     return (
       <View style={ styles.forecastContainer }>
-        { this.state.booleans.map((bool, index) => (
-          bool ? null :
-          <View key={ index }>
-            <View style={ btns[index] } />
-            <TouchableHighlight onPress={ this._handleMFPress.bind(this, index) } >
-              <Text style={ transforms[index] } >
-                { this.state.strings[index] }
-              </Text>
-            </TouchableHighlight>
-          </View>
-        ))}
-
         { (this.state.booleans[0] === true) ?
           <View>
             <ForecastList
-              flipper={ styles.flipper }
+              flipper={ [styles.flipper, this.state.options?styles.optionsOverlay:null] }
               forecast={ this.props.forecast } />
-            <Text style={ styles.bottomBtn }>
+            <Text style={ styles.bottomTxt }>
               { this.state.strings[0] }
             </Text>
           </View> : null }
@@ -61,9 +54,9 @@ export default class Detail extends Component {
         { (this.state.booleans[1] === true) ?
           <View>
             <ForecastChart
-              flipper={ styles.flipper }
+              flipper={ [styles.flipper, this.state.options?styles.optionsOverlay:null] }
               forecast={ this.props.forecast } />
-            <Text style={ styles.bottomBtn }>
+            <Text style={ styles.bottomTxt }>
               { this.state.strings[1] }
             </Text>
           </View> : null }
@@ -71,13 +64,36 @@ export default class Detail extends Component {
         { (this.state.booleans[2] === true) ?
           <View>
             <Map
-              flipper={ styles.flipper }
+              flipper={ [styles.flipper, this.state.options?styles.optionsOverlay:null] }
               loc={ this.props.loc }
               stations={ this.props.stations } />
-            <Text style={ styles.bottomBtn }>
+            <Text style={ styles.bottomTxt }>
               { this.state.strings[2] }
             </Text>
           </View> : null }
+
+        <TouchableHighlight onPress={ this._handleOptionsPress.bind(this) } >
+          <Text style={ styles.bottomBtn } >
+            Detail options
+          </Text>
+        </TouchableHighlight>
+
+        { this.state.options ?
+          <View>
+            { this.state.booleans.map((bool, index) => (
+              <View
+                key={ index }
+                style={ btns[index] }>
+                <TouchableHighlight onPress={ this._handleMFPress.bind(this, index) } >
+                  <Text>
+                    { bool ? ('Back to ' + this.state.strings[index]) :
+                      this.state.strings[index] }
+                  </Text>
+                </TouchableHighlight>
+              </View>
+            ))}
+          </View> :
+        null }
       </View>
     );
   }
@@ -87,6 +103,9 @@ const baseFontSize = 16;
 const styles = StyleSheet.create({
   forecastContainer: {
     alignItems: 'center'
+  },
+  optionsOverlay: {
+    opacity: 0.6,
   },
   bigText: {
     flex: 2,
@@ -112,13 +131,13 @@ const styles = StyleSheet.create({
   },
   leftBtn: {
     position: 'absolute',
-    top: 10,
-    left: -185,
+    top: 120,
+    left: -165,
     right: 0,
     bottom: 0,
-    height: 340,
-    width: 30,
-    backgroundColor: 'cyan',
+    height: 60,
+    width: 60,
+    backgroundColor: 'orange',
     borderRadius: 5,
     shadowColor: '#000000',
     shadowOpacity: 1.0,
@@ -127,47 +146,55 @@ const styles = StyleSheet.create({
   },
   rightBtn: {
     position: 'absolute',
-    top: 10,
-    left: 185,
+    top: 120,
+    left: 105,
     right: 0,
     bottom: 0,
-    height: 340,
-    width: 30,
-    backgroundColor: 'green',
+    height: 60,
+    width: 60,
+    backgroundColor: 'orange',
     borderRadius: 5,
     shadowColor: '#000000',
     shadowOpacity: 1.0,
     shadowRadius: 2,
     shadowOffset: { height: 10, width: 5 }
   },
-  transformLeft: {
+  centerBtn: {
     position: 'absolute',
-    top: 10,
-    left: -180,
+    top: 120,
+    left: -30,
     right: 0,
     bottom: 0,
-    height: 40,
-    width: 30,
-    color: '#FFFFFF',
-    textAlign: 'center',
-    transform: [{ rotate: '270deg' }]
+    height: 60,
+    width: 60,
+    backgroundColor: 'orange',
+    borderRadius: 5,
+    shadowColor: '#000000',
+    shadowOpacity: 1.0,
+    shadowRadius: 2,
+    shadowOffset: { height: 10, width: 5 }
   },
-  transformRight: {
+  bottomTxt: {
     position: 'absolute',
-    top: 10,
-    left: 180,
+    top: 360,
+    left: -95,
     right: 0,
     bottom: 0,
-    height: 40,
-    width: 30,
+    height: 30,
+    width: 90,
     color: '#FFFFFF',
+    backgroundColor: 'orange',
     textAlign: 'center',
-    transform: [{ rotate: '90deg' }]
+    borderRadius: 5,
+    shadowColor: '#000000',
+    shadowOpacity: 1.0,
+    shadowRadius: 2,
+    shadowOffset: { height: 10, width: 5 }
   },
   bottomBtn: {
     position: 'absolute',
     top: 360,
-    left: -40,
+    left: 0,
     right: 0,
     bottom: 0,
     height: 30,

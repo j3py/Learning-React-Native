@@ -62,11 +62,14 @@ export default class ForecastChart extends Component {
 const baseFontSize = 16;
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'column',
     marginTop: 6
   },
   item: {
     flexDirection: 'column',
+    flex: 1,
+    overflow: 'hidden',
     marginBottom: 5,
     paddingHorizontal: 10
   },

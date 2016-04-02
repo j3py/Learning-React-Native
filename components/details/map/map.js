@@ -13,7 +13,7 @@ export default class Map extends Component {
   }
 
   render() {
-    console.log('//// stations prop in Map', this.props.stations);
+    console.log('/ map - deepest component reached');
     return (
       <MapView
         style={ this.props.flipper }

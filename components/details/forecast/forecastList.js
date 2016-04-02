@@ -17,6 +17,7 @@ export default class ForecastList extends Component {
   }
 
   render() {
+    console.log('/ forecast list - deepest component reached');
     return (
       <View style={ [styles.forecastContainer, this.props.flipper] }>
         <ListView
@@ -38,6 +39,7 @@ export default class ForecastList extends Component {
 const baseFontSize = 16;
 const styles = StyleSheet.create({
   forecastContainer: {
+    flex: 1,
     alignItems: 'center'
   },
   bigText: {
@@ -55,6 +57,8 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   border: {
+    flex: 1,
+    overflow: 'hidden',
     borderBottomColor: 'white',
     borderBottomWidth: 3
   }

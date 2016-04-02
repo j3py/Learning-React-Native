@@ -1,0 +1,4 @@
+--compilers js:babel-register
+--recursive test/*.test.js
+--require react-native-mock/mock
+--reporter nyan

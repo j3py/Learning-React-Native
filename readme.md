@@ -1,8 +1,10 @@
-# WeatherProject Groundhog Day Edition
+# WeatherProject Groundhog Day US-only Edition
 
 ### Base code from "Learning React Native" by Bonnie Eisenman.
 
 ### Working through her tutorial before making it my own.
+
+### Currently fetches weather data for US locations only.
 
 ###### Current screenshot gifs courtesy of RecordIt:
 

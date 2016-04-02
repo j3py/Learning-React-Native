@@ -15,7 +15,7 @@ export default class Detail extends Component {
     super(props);
     this.state = {
       strings: ['5-day list', '5-day chart', 'Station map'],
-      booleans: [true, false, false],
+      booleans: [false, false, true],
       options: false
     }
   }
@@ -38,6 +38,8 @@ export default class Detail extends Component {
   render() {
     let btns = [styles.leftBtn, styles.rightBtn, styles.centerBtn];
     let current = this.state.booleans.indexOf(true);
+
+    console.log('// booleans', this.state.booleans);
 
     return (
       <View style={ styles.forecastContainer }>

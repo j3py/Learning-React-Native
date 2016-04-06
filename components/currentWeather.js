@@ -5,6 +5,7 @@ import React, {
   Text,
   View,
 } from 'react-native';
+import { styles } from './styles/currentWeatherStyles';
 
 export default class CurrentWeather extends Component {
   constructor(props) {
@@ -27,17 +28,3 @@ export default class CurrentWeather extends Component {
     );
   }
 }
-
-const baseFontSize = 16;
-const styles = StyleSheet.create({
-  forecastContainer: {
-    alignItems: 'center'
-  },
-  bigText: {
-    flex: 2,
-    fontSize: baseFontSize + 4,
-    textAlign: 'center',
-    margin: 10,
-    color: '#FFFFFF'
-  }
-});

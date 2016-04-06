@@ -7,9 +7,7 @@
 ### Currently fetches weather data for US locations only.
 
 ### TO-DO:
-- get rid of mockery warnings
-- componentize styles
-- fix details button
+
 - make bars in bar graph dynamic
 - add redux
 - update charts for weekly views (consider other timeframes)

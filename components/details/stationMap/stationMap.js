@@ -28,21 +28,3 @@ export default class StationMap extends Component {
     );
   }
 };
-
-// const baseFontSize = 16;
-// const styles = StyleSheet.create({
-//   maps: {
-//     position: 'absolute',
-//     top: 50,
-//     left: -90,
-//     right: 0,
-//     bottom: 0,
-//     height: 300,
-//     width: 300,
-//     borderRadius: 10,
-//     shadowColor: '#000000',
-//     shadowOpacity: 1.0,
-//     shadowRadius: 2,
-//     shadowOffset: { height: 10, width: 5 }
-//   },
-// });

@@ -3,6 +3,9 @@ import { shallow } from "enzyme";
 import { expect } from 'chai';
 
 import mockery from 'mockery';
+import { mockeryAllowedArray } from './mockeryAllowedArray';
+// make mockery warnings go away
+mockery.registerAllowables(mockeryAllowedArray);
 mockery.enable();
 mockery.registerMock('image!cloud','../ios/WeatherProject/Images.xcassets/cloud.imageset/cloud.png');
 mockery.registerMock('image!cold_cloud','../ios/WeatherProject/Images.xcassets/cold_cloud.imageset/cold_cloud.png');

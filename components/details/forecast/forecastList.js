@@ -17,7 +17,6 @@ export default class ForecastList extends Component {
   }
 
   render() {
-    console.log('/ forecast list - deepest component reached');
     return (
       <View style={ [styles.forecastContainer, this.props.flipper] }>
         <ListView

@@ -4,6 +4,9 @@ import { expect } from 'chai';
 import MapView from './mocks/mapViewMock';
 
 import mockery from 'mockery';
+import { mockeryAllowedArray } from './mockeryAllowedArray';
+// make mockery warnings go away
+mockery.registerAllowables(mockeryAllowedArray);
 mockery.enable();
 mockery.registerMock('react-native-maps', MapView);
 

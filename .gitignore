@@ -38,3 +38,4 @@ npm-debug.log
 # environment stuff
 #
 env_var.js
+mockeryAllowedArray.js

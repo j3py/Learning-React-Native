@@ -39,8 +39,6 @@ export default class Detail extends Component {
     let btns = [styles.leftBtn, styles.rightBtn, styles.centerBtn];
     let current = this.state.booleans.indexOf(true);
 
-    console.log('// booleans', this.state.booleans);
-
     return (
       <View style={ styles.forecastContainer }>
         { (this.state.booleans[0] === true) ?

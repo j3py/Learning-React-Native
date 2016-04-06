@@ -9,6 +9,8 @@
 ### TO-DO:
 - get rid of mockery warnings
 - componentize styles
+- fix details button
+- make bars in bar graph dynamic
 - add redux
 - update charts for weekly views (consider other timeframes)
 - add flip card animation for easy navigation between detail views
@@ -17,7 +19,7 @@
 ###### Current screenshot gifs courtesy of RecordIt:
 
 ###### iOS
-![current screenshot iOS](http://g.recordit.co/UdyI1OSkYx.gif "Current functionality iOS")
+![current screenshot iOS](http://g.recordit.co/uonvgFf6rO.gif "Current functionality iOS")
 
 ###### Android
 I have issues on-and-off with running the Android emulator.<br>

@@ -7,13 +7,12 @@ import React, {
 } from 'react-native';
 import MapView from 'react-native-maps';
 
-export default class Map extends Component {
+export default class StationMap extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    console.log('/ map - deepest component reached');
     return (
       <MapView
         style={ this.props.flipper }

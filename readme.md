@@ -6,6 +6,14 @@
 
 ### Currently fetches weather data for US locations only.
 
+### TO-DO:
+- get rid of mockery warnings
+- componentize styles
+- add redux
+- update charts for weekly views (consider other timeframes)
+- add flip card animation for easy navigation between detail views
+- add tests for props and get enzyme's mount method working with jsdom
+
 ###### Current screenshot gifs courtesy of RecordIt:
 
 ###### iOS

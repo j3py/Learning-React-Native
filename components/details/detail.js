@@ -8,14 +8,14 @@ import React, {
 } from 'react-native';
 import ForecastChart from './forecast/forecastChart';
 import ForecastList from './forecast/forecastList';
-import Map from './map/map';
+import StationMap from './stationMap/stationMap';
 
 export default class Detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       strings: ['5-day list', '5-day chart', 'Station map'],
-      booleans: [false, false, true],
+      booleans: [true, false, false],
       options: false
     }
   }
@@ -65,7 +65,7 @@ export default class Detail extends Component {
 
         { (this.state.booleans[2] === true) ?
           <View>
-            <Map
+            <StationMap
               flipper={ [styles.flipper, this.state.options?styles.optionsOverlay:null] }
               loc={ this.props.loc }
               stations={ this.props.stations } />

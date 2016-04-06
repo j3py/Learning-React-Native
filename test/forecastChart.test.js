@@ -1,6 +1,12 @@
-import React from 'react';
-import { shallow, mount } from "enzyme";
+import React from 'react-native';
+import { shallow } from "enzyme";
 import { expect } from 'chai';
+import MapView from './mocks/mapViewMock';
+
+import mockery from 'mockery';
+mockery.enable();
+mockery.registerMock('react-native-maps', MapView);
+
 import ForecastChart from "../components/details/forecast/forecastChart";
 
 describe("<ForecastChart/>", () => {
@@ -36,7 +42,6 @@ describe("<ForecastChart/>", () => {
       ]};
 
     let wrapper = shallow(<ForecastChart forecast={ mockData } />);
-    console.log(wrapper.debug());
     expect(wrapper.find('ListView')).to.have.length(1);
   });
 });

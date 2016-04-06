@@ -1,42 +1,26 @@
-import React from 'react';
-import { shallow, mount } from "enzyme";
+import React from 'react-native';
+import { shallow } from "enzyme";
 import { expect } from 'chai';
-import ForecastList from "../components/details/forecast/forecastList";
 
-describe("<ForecastList/>", () => {
-  it("should render one ListView", () => {
-    let mockData = { list: [
-        {
-          dt_txt: "Shrug?",
-          weather: [{description: "Cautiously optimistic."}],
-          main: {
-            temp: 70.00,
-            humidity: 0.00,
-            pressure: 1000.00
-          }
-        },
-        {
-          dt_txt: "Nothing",
-          weather: [{description: "Staring into the void."}],
-          main: {
-            temp: 0.00,
-            humidity: 0.00,
-            pressure: 0.00
-          }
-        },
-        {
-          dt_txt: "printf",
-          weather: [{description: "Shiver in eternal darkness."}],
-          main: {
-            temp: 0.00,
-            humidity: 1000.00,
-            pressure: 10000.00
-          }
-        }
-      ]};
+import mockery from 'mockery';
+mockery.enable();
+mockery.registerMock('image!cloud','../ios/WeatherProject/Images.xcassets/cloud.imageset/cloud.png');
+mockery.registerMock('image!cold_cloud','../ios/WeatherProject/Images.xcassets/cold_cloud.imageset/cold_cloud.png');
+import MapView from './mocks/mapViewMock';
+mockery.registerMock('react-native-maps', MapView);
 
-    let wrapper = shallow(<ForecastList forecast={ mockData } />);
-    console.log('////// enzyme wrapper', wrapper.debug());
-    expect(wrapper.find('ListView')).to.have.length(1);
+import WeatherBase from "../components/weatherBase";
+
+describe("<WeatherBase/>", () => {
+  it("should render seven components", () => {
+    //let mockData = {};
+
+    let wrapper = shallow(<WeatherBase />);
+    expect(wrapper.find('View')).to.have.length(2);
+    expect(wrapper.find('Text')).to.have.length(1);
+    expect(wrapper.find('TextInput')).to.have.length(1);
+    expect(wrapper.find('Image')).to.have.length(1);
+    expect(wrapper.find('AnimatedComponent')).to.have.length(1);
+    expect(wrapper.find('CurrentWeather')).to.have.length(1);
   });
 });

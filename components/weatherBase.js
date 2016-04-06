@@ -139,7 +139,6 @@ export default class WeatherBase extends Component {
   }
 
   render() {
-    console.log('/// overlayTop', this.state.overlayTop);
     return (
       <View style={ styles.container } >
         <Image source={ this.state.image }

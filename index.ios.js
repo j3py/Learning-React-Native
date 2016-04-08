@@ -7,7 +7,7 @@ import React, {
   AppRegistry,
   Component
 } from 'react-native';
-import WeatherBase from './components/weatherBase';
+import WeatherBase from './rn_app/components/weatherBase';
 
 class WeatherProject extends Component {
   constructor(props) {

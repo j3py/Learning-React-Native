@@ -1,10 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
+
 import React, {
-  AppRegistry,
   Component,
   StyleSheet,
   Text,
@@ -16,7 +12,7 @@ import React, {
 } from 'react-native';
 import CurrentWeather from './currentWeather';
 import Detail from './details/detail';
-import { APPID } from '../env_var';
+import { APPID } from '../../env_var';
 import { styles } from './styles/weatherBaseStyles';
 
 export default class WeatherBase extends Component {
@@ -24,17 +20,16 @@ export default class WeatherBase extends Component {
     super(props);
     this.image1 = require('image!cold_cloud');
     this.image2 = require('image!cloud');
-    this.details = null;
+    this.openDetail = new Animated.Value(0);
+    this.closeDetail = new Animated.Value(150);
     this.state = {
-      zip: '15767',
+      zip: 15767,
       enterZip: false,
       flavor1: 'It\'s going to be cold for zip code: ',
       flavor2: 'And it will last you',
       city: '',
       image: this.image2,
       overlayTop: false,
-      openDetail: new Animated.Value(0),
-      closeDetail: new Animated.Value(150),
       current: {
         main: 'It\'s going to be grey.',
         description: 'the rest of your life.',
@@ -46,9 +41,8 @@ export default class WeatherBase extends Component {
           longitudeDelta: 0.1
         }
       },
-      details: null,
       forecast: null,
-      stations: null,
+      stations: null
     };
   }
 
@@ -109,7 +103,7 @@ export default class WeatherBase extends Component {
 
   _handleDetailPress(event) {
     if(this.state.overlayTop) {
-      Animated.timing(this.state.openDetail, { toValue: 150 },).start();
+      Animated.timing(this.openDetail, { toValue: 150 },).start();
       this.setState({
         overlayTop: false
       });
@@ -118,7 +112,7 @@ export default class WeatherBase extends Component {
         this.state.current.loc.latitude + '&lon=' + this.state.current.loc.longitude +
         '&APPID=' + APPID;
       var setStateStns = (responseJSON) => {
-        Animated.timing(this.state.closeDetail, { toValue: 0 },).start();
+        Animated.timing(this.closeDetail, { toValue: 0 },).start();
         this.setState({
           stations: responseJSON,
           overlayTop: true
@@ -145,7 +139,7 @@ export default class WeatherBase extends Component {
         <Image source={ this.state.image }
           resizeMode='contain'
           style={ styles.backdrop } >
-          <Animated.View style={ [styles.overlay, { marginTop: this.state.overlayTop?this.state.openDetail:this.state.closeDetail }] }>
+          <Animated.View style={ [styles.overlay, { marginTop: this.state.overlayTop?this.openDetail:this.closeDetail }] }>
             <View style={ styles.row }>
                 <Text style={ styles.mainText }>
                   { this.state.flavor1 }
@@ -169,7 +163,7 @@ export default class WeatherBase extends Component {
               </Text>
             </TouchableHighlight> : null }
 
-            { this.state.overlayTop ? <Detail
+            { this.state.details.overlayTop ? <Detail
               loc={ this.state.current.loc }
               forecast={ this.state.forecast }
               stations={ this.state.stations } /> : null }

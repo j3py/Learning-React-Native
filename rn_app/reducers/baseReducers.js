@@ -39,7 +39,8 @@ const initialState = {
   }
 };
 
-function zipSubmit(state = {}, action = {}) {
+function zipSubmit(state = initialState, action = {}) {
+  console.log('//// zip submit');
   switch (action.type) {
     case ZIP_SUBMIT:
       return {
@@ -52,12 +53,13 @@ function zipSubmit(state = {}, action = {}) {
   };
 };
 
-function detailPress(state = {}, action = {}) {
+function detailPress(state = initialState, action = {}) {
+  console.log('//// detail press');
   switch (action.type) {
     case DETAIL_PRESS:
       return {
         ...state,
-        overlayTop: action.overlayTop
+        overlayTop: state.details.overlayTop?false:true
       };
     default:
       return state;

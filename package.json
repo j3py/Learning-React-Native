@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "react-native": "^0.21.0",
-    "react-native-maps": "^0.3.1"
+    "react-native-maps": "^0.3.1",
+    "redux": "^3.3.1",
+    "react-redux": "^4.4.1"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",

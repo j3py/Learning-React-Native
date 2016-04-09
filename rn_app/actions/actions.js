@@ -1,13 +1,13 @@
 // BASE ACTIONS
-export function ZIP_SUBMIT = (zip, enterZip) => {
+export const ZIP_SUBMIT = (zip) => {
   return {
     type: 'ZIP_SUBMIT',
     zip: zip,
-    enterZip: enterZip
-  };
+    enterZip: true
+  }
 }
 
-export function GET_CURRENT = (current, flavor1, flavor2, city, image) => {
+export const GET_CURRENT = (current, flavor1, flavor2, city, image) => {
   return {
     type: 'GET_CURRENT',
     current: current,
@@ -15,28 +15,28 @@ export function GET_CURRENT = (current, flavor1, flavor2, city, image) => {
     flavor2: flavor2,
     city: city,
     image: image
-  };
+  }
 }
 
-export function DETAIL_PRESS = (overlayTop) => {
+export const DETAIL_PRESS = () => {
   return {
     type: 'DETAIL_PRESS',
-    overlayTop: overlayTop
-  };
+    overlayTop
+  }
 }
 
-export function GET_FORECAST = (forecast) => {
+export const GET_FORECAST = (forecast) => {
   return {
     type: 'GET_FORECAST',
     forecast: forecast
-  };
+  }
 }
 
-export function GET_STATIONS = (stations) => {
+export const GET_STATIONS = (stations) => {
   return {
     type: 'GET_STATIONS',
     stations: stations
-  };
+  }
 }
 
 // DETAILS ACTIONS
